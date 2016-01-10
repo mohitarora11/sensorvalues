@@ -1,17 +1,18 @@
 <?php
 
 // Database Connection
-	/*
+
     $servername = '127.0.0.1';
 	$username = "root";
 	$password = "admin123";
 	$dbname = "sensorvalues";
-*/
+
+	/*
 	$servername = "localhost";
 	$username = "diptendu91";
 	$password = "diptendu91";
 	$dbname = "sensordata";
-
+*/
 $connection=mysqli_connect($servername, $username, $password, $dbname);
 
 echo mysql_error();
@@ -144,7 +145,7 @@ while ($row = mysqli_fetch_assoc($sql)) {
 				break;	
 	   }
 	   
-     }
+    }
 	 $output .="\n";
 }
 
