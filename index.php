@@ -5,6 +5,9 @@
         <meta name="viewpoint" content= "width=device-width, initial-scale=1.0">
         <title> Landfil Gas Realtime Monitoring </title>
         <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+		<style type="text/css">
+			h5 {line-height:20px;display:none}
+		</style>
     </head>
  <body>
 <?php isset($_GET["for"]) ? $for = $_GET['for'] : $for = 0; ?>
@@ -18,7 +21,7 @@ var data =
 </script>
  <script src="js/Chart.min.js"></script>
 
-	<nav class="navbar navbar-default">	
+	<nav class="navbar navbar-default" id="navbar">	
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<a class="navbar-brand" href="http://www.sweepenviro.com/">ESS Enviro Pvt Ltd</a> 
@@ -47,24 +50,27 @@ var data =
 	<h1>
 		<center>Landfill Gas Monitoring Data</center>
 	</h1>
-<center>
+	<h5>
+		<center>
+		Ess Enviro Pvt Ltd<br/>
+		Landfill Site Odour Monitoring Report<br/>
+		Issued to <br/>
+		Pune Municipal Corporation, Indradhanushya Environment & Citizen Centre" <br/>
+		PMC, Rajendranagar Pune 411030<br/>
+
+		Name of site :  Disha Project, PMC kachra Depot, Ramtekdi Industrial Area.<br/>
+		Name of instrument used: SAQMS- ODOUR<br/>
+		Name of website where data can be accessed: sensors.essenviro.com<br/>
+		</center>
+	</h5>
+<center id="dwnloadbuton">
 	<a class="btn btn-default btn-lg" href="downloadData2.php?for=<?php echo $for; ?>">
 		<span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Download Data
 	</a>
-<!--
-<a class="btn btn-default btn-lg" href="downloadData2.php?for=3">
-    <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Monthly Data
-</a>
-<a class="btn btn-default btn-lg" href="downloadData2.php?for=2">
-    <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Daily Data
-</a>
-<a class="btn btn-default btn-lg" href="downloadData2.php?for=1">
-    <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> All Data
-</a>
--->
+
 </center>
 <br/><br/>
-	<div class="row-fluid">		
+	<div class="row">		
 		<div class="col-md-3 col-sm-5 col-xs-12">
 			<h4>Composite VOCs</h4>
 			<canvas id="canvas1" width="600" height="400"></canvas>
@@ -89,6 +95,18 @@ var data =
 			<h4>Humidity</h4>
 			<canvas id="canvas6" width="600" height="400"></canvas>
 		</div>
+	</div>
+	<div class="row">
+		<center>
+			<button id="printbutton" type="button" class="btn btn-default btn-lg" aria-label="Left Align">
+				<span class="glyphicon glyphicon-print" aria-hidden="true"></span> Print
+			</button>
+			<button id="refreshbutton" type="button" style="display:none" class="btn btn-default btn-lg" aria-label="Left Align">
+				<span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>Refresh
+			</button>	
+			
+		</center>
+		<br/>
 	</div>
 </div>
 	
@@ -188,10 +206,29 @@ var data =
 		window.myLine6 = new Chart(ctx6).Line(lineChartData6, {responsive: true});
 	}
 
-    function doAction(val){
-        //Forward browser to new url
+    function doAction(val){        
         window.location=top.window.location.origin+top.window.location.pathname +'?for=' + val;
-    }
+	}
+	
+	document.getElementById("printbutton").addEventListener("click", function(){
+		document.getElementById("dwnloadbuton").style.display = 'none';
+		document.getElementById("printbutton").style.display = 'none';
+		document.getElementById("refreshbutton").style.display = 'block';
+		document.getElementById("navbar").style.display = 'none';
+		document.getElementsByTagName('h1')[0].style.display = 'none';
+		document.getElementsByTagName('h5')[0].style.display = 'block';
+		
+	});
+	
+	document.getElementById("refreshbutton").addEventListener("click", function(){
+		document.getElementById("dwnloadbuton").style.display = 'block';
+		document.getElementById("printbutton").style.display = 'block';
+		document.getElementById("refreshbutton").style.display = 'none';
+		document.getElementById("navbar").style.display = 'block';
+		document.getElementsByTagName('h1')[0].style.display = 'block';
+		document.getElementsByTagName('h5')[0].style.display = 'none';
+	});
+	
 </script>
 
 </body>
